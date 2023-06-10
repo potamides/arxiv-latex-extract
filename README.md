@@ -41,7 +41,7 @@ particular, it has the following limitations:
   if the previous execution was interrupted (e.g. by a `KeyboardInterrupt`).
 * Due to limited download speeds, the script can be quite slow.
 
-# Acknowledgments
+## Acknowledgments
 The code for cleaning up L<sup>A</sup>T<sub>E</sub>X files is largely based on
 the [arXiv processing
 code](https://github.com/togethercomputer/RedPajama-Data/tree/main/data_prep/arxiv)
