@@ -253,12 +253,7 @@ def create_record(
 
     @return: dictionary containing the cleaned tex text and metadata
     """
-    try:
-        expanded_str = expand_macros(tex_file)
-    except Exception as e:
-        return None, arxiv_id
-
-    if len(expanded_str) == 0:
+    if len(tex_file) == 0:
         return {"text": "", "meta": {}}, arxiv_id
 
     # get the arxiv id in the correct format
@@ -273,7 +268,7 @@ def create_record(
 
     return (
         {
-            "text": expanded_str,
+            "text": tex_file,
             "meta": {
                 "timestamp": timestamp,
                 "yymm": yymm,
@@ -284,6 +279,7 @@ def create_record(
         },
         clean_arxiv_id
     )
+
 
 def matches(directory, filter_func):
     for root, _, filenames in os.walk(directory):
@@ -343,75 +339,3 @@ def _tex_proj_loader(
         except ValueError:
             if idx == len(encodings) -1:
                 logging.error(f"DecodeError: {file_or_dir_path}")
-
-def expand_macros(tex_file: str) -> str:
-    r""" inline-expand definitions and macros
-
-    @param tex_file: tex file
-
-    @return: macro expanded tex file
-    """
-    # build dictionaries that contain the definitions of all macros in all tex
-    # files. This is used to expand all macros used in the text with
-    # their definitions, so that consistency among different authors is
-    # ensured. TODO: macros that take arguments are not supported yet
-
-    non_arg_macros = _build_non_arg_macros_dict(tex_file)
-    for macro_name, macro_value in non_arg_macros.items():
-        tex_file = re.sub(
-            # make pattern grouped to make sure that the macro is not part
-            # of a longer alphanumeric word
-            pattern=r"(" + macro_name + r")" + r"([^a-zA-Z0-9])",
-            # replace the macro with its value and add back the character that
-            # was matched after the macro
-            repl=macro_value + r"\2",
-            string=tex_file
-        )
-
-    return tex_file
-
-
-def _build_non_arg_macros_dict(file_content: str) -> Dict[str, str]:
-    r""" function takes the content of a tex file and returns a dictionary
-    that contains the definitions of all macros that do not use arguments.
-    The dictionary is of the form {macro_name: macro_value}.
-
-    @param file_content: the content of the tex file as a string.
-
-    @return: dict
-    """
-    # regex for extracting \newcommand macros without arguments
-    non_arg_nc_reg = re.compile(
-        # this regex matches the following:
-        # \newcommand{\macro_name}{macro_value}
-        # \newcommand*{\macro_name}{macro_value}
-        # where macro_name is only allowed to contain letters and numbers;
-        # macro_value can contain any character.
-        pattern=r'\\\bnewcommand\b\*?\{(\\[a-zA-Z0-9]+?)\}\{(.*?)\}$',
-        flags=re.MULTILINE
-    )
-
-    # regex for extracting \def macros without arguments
-    non_arg_def_reg = re.compile(
-        # this regex matches the following:
-        # \def\macro_name{macro_value}
-        # where macro_name is only allowed to contain letters and numbers;
-        # macro_value can contain any character.
-        pattern=r'\\def\s*(\\[a-zA-Z0-9]+?)\s*\{(.*?)\}$',
-        flags=re.MULTILINE
-    )
-
-    # Extract all user-defined LaTeX macros from the preamble
-    macros = {}
-    for reg in [non_arg_nc_reg, non_arg_def_reg]:
-        for match in reg.finditer(file_content):
-            # convert the macro name and value to a raw string that can be
-            # used in re.sub
-            macro_name = match \
-                .group(1).encode("unicode-escape").decode("utf-8")
-            macro_val = match \
-                .group(2).encode("unicode-escape").decode("utf-8")
-
-            macros[macro_name] = macro_val
-
-    return macros
