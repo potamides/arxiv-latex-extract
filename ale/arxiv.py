@@ -21,7 +21,7 @@ def _to_timestamp(item):
     return datetime.strptime(item['identifier'], "arXiv_src_%y%m_%f")
 
 def _item_download(identifier, index, verbose=False, pattern="*.tar", timeout=TIMEOUT_MAX):
-    item = ia.get_item(identifier)
+    item = ia.get_item(identifier, request_kwargs=dict(timeout=timeout))
     item.download(destdir=ARCHIVE_DIR, verbose=verbose, glob_pattern=pattern, item_index=index, timeout=timeout)
     return join(ARCHIVE_DIR, identifier)
 
