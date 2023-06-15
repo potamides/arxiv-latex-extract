@@ -1,12 +1,12 @@
 import concurrent.futures
 from datetime import datetime
-from tqdm import tqdm
 import fnmatch
 import gzip
 import json
 import logging
 import lzma
 import os
+from os.path import basename, dirname
 import pathlib
 import re
 from subprocess import CalledProcessError, DEVNULL, run
@@ -14,6 +14,8 @@ import tarfile
 from tempfile import NamedTemporaryFile, TemporaryDirectory
 from typing import Dict, List, Optional, Tuple, Union
 import uuid
+
+from tqdm import tqdm
 
 from . import ARXIV_URL
 
@@ -174,8 +176,9 @@ def latexpand(tex_file_path):
     Flatten LaTeX file by expanding \include and \input, ... and remove comments
     """
     with NamedTemporaryFile(buffering=0) as tmp:
-        cmd = ['latexpand', tex_file_path, "--output", tmp.name]
-        run(cmd, stdout=DEVNULL, stderr=DEVNULL, check=True)
+        path, file = dirname(tex_file_path) or None, basename(tex_file_path)
+        cmd = ['latexpand', file, "--output", tmp.name]
+        run(cmd, cwd=path, stdout=DEVNULL, stderr=DEVNULL, check=True)
 
         tmp.seek(0)
         return tmp.read().strip()
