@@ -1,5 +1,5 @@
 # ALE: arXiv L<sup>A</sup>T<sub>E</sub>X Extract
-ALE is a tool for bulk extracting LaTeX sources from
+ALE is a tool for bulk extracting L<sup>A</sup>T<sub>E</sub>X sources from
 [arXiv.org](https://arxiv.org) by processing [arXiv Bulk
 Data](https://info.arxiv.org/help/bulk_data_s3.html). Unlike other tools that
 rely on [Amazon S3](https://aws.amazon.com/s3) for downloading, ALE utilizes
@@ -15,8 +15,8 @@ pip install -r requirements.txt
 ```
 In addition, this project needs
 [`latexpand`](https://gitlab.com/latexpand/latexpand) to flatten
-L<sup>A</sup>T<sub>E</sub>X files and remove comments, so make sure it is
-installed and on your `PATH`.
+L<sup>A</sup>T<sub>E</sub>X files, so make sure it is installed and on your
+`PATH`.
 
 ## Usage
 To launch the script execute [`main.py`](./main.py):
@@ -33,13 +33,7 @@ your liking.
 
 ## Limitations
 While this project worked wonderfully for my task, it is still a messy script
-that was hacked together in a short amount of time. Use at your own risk! In
-particular, it has the following limitations:
-
-* When ALE is executed again, files that were previously processed are skipped.
-  However, the integrity of these files is not checked. This can be problematic
-  if the previous execution was interrupted (e.g. by a `KeyboardInterrupt`).
-* Due to limited download speeds, the script can be quite slow.
+that was hacked together in a short amount of time. Use at your own risk!
 
 ## Acknowledgments
 The code for cleaning up L<sup>A</sup>T<sub>E</sub>X files is largely based on

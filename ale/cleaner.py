@@ -89,7 +89,7 @@ class ArxivCleaner:
             which means all files are processed. This is useful for testing.
         @param out_fname: name of the output file, defaults to "arxiv.jsonl"
         """
-        with open(self._target_dir / (out_fname + (".xz" if compress else "")), "wb") as f:
+        with open((path := self._target_dir / (out_fname + (".xz" if compress else ""))), "wb") as f:
             for tex_file, yymm, arxiv_id, timestamp in tqdm(self.arxiv_iterator(max_files=max_files), disable=not verbose):
                 record, arxiv_id = create_record(
                     tex_file=tex_file,
@@ -111,6 +111,8 @@ class ArxivCleaner:
                 else:
                     f.write((json.dumps(record) + "\n").encode())
                 logging.info(f"processed {arxiv_id}")
+
+            return path
 
     def arxiv_iterator(
             self, max_files: int = -1, tar_fp_list: Optional[List[str]] = None
