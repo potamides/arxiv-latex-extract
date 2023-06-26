@@ -2,9 +2,14 @@
 ALE is a tool for bulk extracting L<sup>A</sup>T<sub>E</sub>X sources from
 [arXiv.org](https://arxiv.org) by processing [arXiv Bulk
 Data](https://info.arxiv.org/help/bulk_data_s3.html). Unlike other tools that
-rely on [Amazon S3](https://aws.amazon.com/s3) for downloading, ALE utilizes
-the mirror on [archive.org](https://archive.org/details/arxiv-bulk), which is a
-free alternative but may be out-of-date.
+exclusively rely on [Amazon S3](https://aws.amazon.com/s3) for downloading, ALE
+primarily utilizes the mirror on
+[archive.org](https://archive.org/details/arxiv-bulk), which is a free
+alternative but may be out-of-date. If optionally
+[boto3](https://github.com/boto/boto3) is then also installed and the
+environment variables `AWS_ACCESS_KEY` and `AWS_SECRET_KEY` point to valid [AWS
+credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/security-creds.html),
+missing buckets are retrieved from Amazon S3.
 
 ## Installation
 Clone the repository and install all requirements.
