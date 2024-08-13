@@ -31,8 +31,8 @@ python main.py
 It will display a progress bar and extracted files will be saved in
 `extracted/`. Archive files are downloaded to `archives/` as needed and deleted
 right after. By default, this script does only extract papers that make use of
-[Ti*k*Z](https://tikz.dev), i.e., papers that were released after January 9th
-2006 (release date of Ti*k*Z 1.0) and contain the phrase `tikzpicture`. To
+[Ti*k*Z](https://tikz.dev), i.e., papers that were released after October 23th
+2005 (release date of Ti*k*Z 1.0) and contain the phrase `tikzpicture`. To
 change this, adapt the [modulino](https://rosettacode.org/wiki/Modulinos) in
 [`main.py`](./main.py) to your liking.
 
