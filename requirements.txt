@@ -1,2 +1,2 @@
-internetarchive==3.5.0
-tqdm==4.65.0
+internetarchive==4.1.0
+tqdm==4.66.5

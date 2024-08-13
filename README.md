@@ -30,11 +30,11 @@ python main.py
 ```
 It will display a progress bar and extracted files will be saved in
 `extracted/`. Archive files are downloaded to `archives/` as needed and deleted
-right after. By default, to keep the number of retrieved files manageable, this
-script does only process papers released after January 1st 2010 which contain
-the phrase `tikzpicture`. To change this behavior adapt the
-[modulino](https://rosettacode.org/wiki/Modulinos) in [`main.py`](./main.py) to
-your liking.
+right after. By default, this script does only extract papers that make use of
+[Ti*k*Z](https://tikz.dev), i.e., papers that were released after January 9th
+2006 (release date of Ti*k*Z 1.0) and contain the phrase `tikzpicture`. To
+change this, adapt the [modulino](https://rosettacode.org/wiki/Modulinos) in
+[`main.py`](./main.py) to your liking.
 
 ## Limitations
 While this project worked wonderfully for my task, it is still a messy script

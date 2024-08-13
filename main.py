@@ -37,7 +37,7 @@ def process(archive, **kwargs):
 
 if __name__ == "__main__":
     def filter_func(tex): return b"tikzpicture" in tex # only process projects which contain tikz
-    cutoff = datetime(2010, 1, 1) # do not process papers older than 2010
+    cutoff = datetime(2006, 1, 9) # tikz 1.0 release date
 
     # Parallelize to make things faster
     with Pool(num_workers:=len(sched_getaffinity(0))) as p:
